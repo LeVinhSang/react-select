@@ -455,9 +455,9 @@ export default class Select extends Component<Props, State> {
       default:
         break;
     }
-    console.log(selectValue);
-    console.log(selectValue[nextFocus]);
+
     this.setState({
+      inputIsHidden: nextFocus === -1 ? false : true,
       focusedValue: selectValue[nextFocus],
     });
   };
@@ -833,6 +833,7 @@ export default class Select extends Component<Props, State> {
       openMenuOnFocus,
     } = this.props;
     const { focusedOption, focusedValue, selectValue } = this.state;
+    console.log(event.currentTarget);
 
     if (isDisabled) return;
 
@@ -847,11 +848,11 @@ export default class Select extends Component<Props, State> {
     this.blockOptionHover = true;
     switch (event.key) {
       case 'ArrowLeft':
-        if (!isMulti) return;
+        if (!isMulti || inputValue) return;
         this.focusValue('previous');
         break;
       case 'ArrowRight':
-        if (!isMulti) return;
+        if (!isMulti || inputValue) return;
         this.focusValue('next');
         break;
       case 'Backspace':
